@@ -8,7 +8,8 @@ const app = express();
 // capturar body
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-console.log(process.env.TOKEN_SECRET)
+//console.log(process.env.TOKEN_SECRET)
+
 // Conexión a Base de datos
 //const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.ncdk5.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
 const uri = "mongodb+srv://zippuserbd:S8s23XNsq7PaiLjS@cluster0.y6gqako.mongodb.net/?retryWrites=true&w=majority";
@@ -21,13 +22,14 @@ mongoose.connect(uri, option)
 
 // import routes
 const authRoutes = require('./routes/auth')
-const dashboadRoutes = require('./routes/admin');
 const verifyToken = require('./routes/validate-token');
-const admin = require('./routes/admin')
+//const admin = require('./routes/admin')
+const zones = require('./routes/zones')
 
 // route middlewares
 app.use('/api/user', authRoutes); 
-app.use('/api/admin', verifyToken, admin);
+//app.use('/api/admin', verifyToken, admin);
+app.use('/api/zones', verifyToken, zones);
 
 
 // iniciar server
