@@ -34,18 +34,14 @@ router.post('/login', async(req, res) => {
     const token = jwt.sign({
         name: user.name,
         id: user._id
-    },process.env.TOKEN_SECRET) //process.env.TOKEN_SECRET
+    },"process.env.TOKEN_SECRET") //process.env.TOKEN_SECRET
 
     res.header('auth-token', token).json({
         error: null,
+        mensaje: 'WELCOME',
         data: {token}
     })
     
-    res.json({
-        error: null,
-        data: 'exito bienvenido',
-        token: token
-    })
 })
 // password  validator
 const bcrypt = require('bcrypt');
