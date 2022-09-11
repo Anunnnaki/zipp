@@ -3,11 +3,13 @@ const fs = require("fs");  //libreria con funciones para crear bitacora de error
 
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 
-
+//cors
+app.use(cors())
 
 // capturar body
 app.use(bodyparser.urlencoded({ extended: false }));
