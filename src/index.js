@@ -1,9 +1,13 @@
 const express = require('express');
+const fs = require("fs");  //libreria con funciones para crear bitacora de errores
+
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
+
+
 
 // capturar body
 app.use(bodyparser.urlencoded({ extended: false }));
