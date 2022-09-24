@@ -18,8 +18,7 @@ app.use(bodyparser.json());
 
 // Conexión a Base de datos
 //const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.ncdk5.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://zippuserbd:S8s23XNsq7PaiLjS@cluster0.y6gqako.mongodb.net/?retryWrites=true&w=majority";
-
+const uri = "mongodb+srv://" + process.env.USER + ":S8s23XNsq7PaiLjS@cluster0.y6gqako.mongodb.net/?retryWrites=true&w=majority";
 const option = { useNewUrlParser: true, useUnifiedTopology: true }
 mongoose.connect(uri, option)
 .then(() => console.log('Base de datos conectada'))
@@ -29,13 +28,14 @@ mongoose.connect(uri, option)
 // import routes
 const authRoutes = require('./routes/auth')
 const verifyToken = require('./routes/validate-token');
-//const admin = require('./routes/admin')
+const admin = require('./routes/admin')// es una prueba
 const zones = require('./routes/zones')
 
 // route middlewares
 app.use('/api/user', authRoutes); 
-//app.use('/api/admin', verifyToken, admin);
+app.use('/api/admin', verifyToken, admin); // es una prueba
 app.use('/api/zones', verifyToken, zones);
+//app.use('/api/zonesuser', verifyToken, zones);
 
 
 // iniciar server

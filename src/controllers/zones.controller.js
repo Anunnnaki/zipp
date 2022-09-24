@@ -11,7 +11,7 @@ zonesCtrl.getZones = async (req,res) => {
 /* Crear zona */
 zonesCtrl.createZone = async (req,res) => {
     req.body.id_User = req.user.id //capture the _id user and push in to the zone new
-    
+    req.body.estado = true
     const payload = req.body
     const newZone = new Zone(payload)
     await newZone.save()
@@ -25,7 +25,7 @@ zonesCtrl.getZone = async (req,res) => {
     res.send(zone)
 
 }
-/* Actualizar zona */
+/* Update zone */
 zonesCtrl.updateZone = async (req,res) => {
     const id = req.params.id
     const payload = req.body
@@ -37,6 +37,15 @@ zonesCtrl.deleteZone = async (req,res) => {
     const id = req.params.id
     await Zone.findByIdAndDelete(id)
     res.send({message: 'Zone deleted successfully'})
+}
+
+/* Obtener zonas de un usuario */
+zonesCtrl.getZonesUser = async (req,res) => {
+    
+    const id_User = req.user.id //capture the _id user
+    const zones = await Zone.find({"id_User": id_User})
+    
+    res.json(zones)
 }
 
 module.exports = zonesCtrl
