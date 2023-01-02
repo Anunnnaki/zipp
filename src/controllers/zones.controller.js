@@ -1,22 +1,40 @@
 const zonesCtrl = {}
-const Zone = require('../models/Zone')
+const { matchedData } = require('express-validator');
+const Zone = require('../model/Zone');
+const handleHttpError = require('../utils/handleErrors');
 require('dotenv').config();
 
 
 /* Obtener todas las zonas */
 zonesCtrl.getZones = async (req,res) => {
-    const zones = await Zone.find()
-    res.json(zones)
+    try{
+        const zones = await Zone.find()
+          res.json(zones)
+    }catch(e){
+        handleHttpError(res, 'Error_get_zones')
+    }
+
+    
 }
 /* Crear zona */
 zonesCtrl.createZone = async (req,res) => {
-    req.body.id_User = req.user.id //capture the _id user and push in to the zone new
-    req.body.estado = true
-    const payload = req.body
-    const newZone = new Zone(payload)
-    await newZone.save()
-    res.send({message: 'Zone created successfully'})
+    try{
+        //req.body.id_User = req.user.id //capture the _id user and push in to the zone new
+        //req.body.estado = true
+        const body = matchedData(req)//Limpia la data que envia el frontend
+        console.log(body)
+        console.log(req.body)
+/**** verificar que tiene el body para guardar en la base */
 
+    const payload = matchedData(req)//req.body
+    const newZone = new Zone(payload)
+    //const data = await newZone.save()
+    //res.send({data})
+
+    }catch(e){
+        handleHttpError(res, 'Error_create_zones')
+    }
+    
 }
 /* Obtener una zona */
 zonesCtrl.getZone = async (req,res) => {

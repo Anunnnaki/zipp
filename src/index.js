@@ -1,45 +1,47 @@
-const express = require('express');
-const fs = require("fs");  //libreria con funciones para crear bitacora de errores
-
-const mongoose = require('mongoose');
-const bodyparser = require('body-parser');
-const cors = require('cors');
+const express = require("express")
+const app = express()
 require('dotenv').config();
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const errorHandler = require('./middleware/error');
 
-const app = express();
+//Import Routes
+const connectDB = require("./db")
+const authRoutes = require('./routes/auth');
+const zoneRoutes = require('./routes/zones');
 
-//cors
+
+ //Connecting the Database
+ connectDB()
+
+
+//Middleware
+app.use(morgan('dev'));
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    limit: '100mb',
+    extended: true
+    }));
+app.use(cookieParser())
 app.use(cors())
+app.use(express.json())
+//Routes Middleware
+app.use("/api", authRoutes)
+app.use("/api/zones", zoneRoutes)
 
-// capturar body
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
-//console.log(process.env.TOKEN_SECRET)
+const PORT = process.env.PORT || 3001
 
-// Conexión a Base de datos
-//const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.ncdk5.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://" + process.env.USER + ":S8s23XNsq7PaiLjS@cluster0.y6gqako.mongodb.net/?retryWrites=true&w=majority";
-const option = { useNewUrlParser: true, useUnifiedTopology: true }
-mongoose.connect(uri, option)
-.then(() => console.log('Base de datos conectada'))
-.catch(e => console.log('error db:', e))
+const server = app.listen(PORT, () => console.log(`Server Connected to port ${PORT}`))
 
+// Handling Error
+process.on("unhandledRejection", err => {
+    console.log(`An error occurred: ${err.message}`)
+    server.close(() => process.exit(1))
+  })
 
-// import routes
-const authRoutes = require('./routes/auth')
-const verifyToken = require('./routes/validate-token');
-const admin = require('./routes/admin')// es una prueba
-const zones = require('./routes/zones')
+  //ERROR MIDDLEWARE
+ app.use(errorHandler);
+ 
 
-// route middlewares
-app.use('/api/user', authRoutes); 
-app.use('/api/admin', verifyToken, admin); // es una prueba
-app.use('/api/zones', verifyToken, zones);
-//app.use('/api/zonesuser', verifyToken, zones);
-
-
-// iniciar server
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`servidor andando en: ${PORT}`)
-})

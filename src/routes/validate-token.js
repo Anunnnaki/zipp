@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 // middleware to validate token (rutas protegidas)
 const verifyToken = (req, res, next) => {
