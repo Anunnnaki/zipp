@@ -7,7 +7,7 @@ const { validatorCreateZone, validatorGetZone } = require("../validator/zones")
 /**
  *  List all zones
  */
-router.get("/zones", authMiddleware, checkRol(["user"]), zoneCtrl.getZones)
+router.get("/", authMiddleware, checkRol(["user"]), zoneCtrl.getZones)
 //router.get("/cuvis", authMiddleware, ZoneCtrl.getZones)
 
 /**
@@ -18,16 +18,16 @@ router.post("/", authMiddleware, checkRol(["user"]), validatorCreateZone,  zoneC
 /**
  * get detail zone
  */
- router.get("/zone/:id", zoneCtrl.getZone)
+ router.get("/:id", zoneCtrl.getZone)
 
 /**
  * update one zone
  */ 
- router.put("/zone/:id", zoneCtrl.updateZone)
+ router.put("/:id", zoneCtrl.updateZone)
 /**
  * delete one zone
  */
- router.delete("/zone/:id", zoneCtrl.deleteZone)
+ router.delete("/:id", zoneCtrl.deleteZone)
 
 
 
