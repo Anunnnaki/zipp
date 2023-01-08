@@ -6,8 +6,8 @@ const { loginCtrl, registerCtrl } =  require("../controllers/auth")
 /**
  * create one USER
  */
-router.post("/signin", validatorRegisterUser, registerCtrl)
-router.post("/signup", validatorLogin, loginCtrl)
+router.post("/register", validatorRegisterUser, registerCtrl)
+router.post("/login", validatorLogin, loginCtrl)
 
 
 module.exports = router

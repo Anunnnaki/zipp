@@ -22,7 +22,7 @@ const authRoutes = require("./routes/auth")
 
 //Middleware
 app.use("/api/zones", zoneRoutes)
-app.use("/api", authRoutes)
+app.use("/api/user", authRoutes)
 
 app.listen(PORT, () => {
     console.log('Server express is connected in ' + PORT + ' PORT')
