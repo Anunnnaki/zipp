@@ -9,13 +9,13 @@ const { handleHttpError } = require("../utils/handleError")
  */
 const getZones = async (req, res) => {
     try{
-      const user = req.res
+      //const user = req.res
       
         const zones = await Zone.find()
           res.json(zones)
-          res.send({ data, user})
+         // res.send({ data, user})
     }catch(e){
-        res.send({data})
+        //res.send({data})
         handleHttpError(res, 'Error_get_zones')
     }
     
