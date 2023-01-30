@@ -19,9 +19,10 @@ const ZoneScheme = new mongoose.Schema(
         valor: {type: Number, required: false},//$
         tipo: {type: String, required: false}, //car, motocicle, bicycle, scooter
         dispo: {type: String, required: false}, //hour, day, week, month
+        photo: {type: String, required: false},
         estado: {
             type: Boolean,  //true, false default
-            default: true
+            default: false
         }
 
 

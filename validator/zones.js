@@ -13,6 +13,8 @@ check("id_User"),
 check("gps").exists().notEmpty().isLength({min:1, max:90}),
 check("valor").exists().notEmpty().isLength({min:1, max:90}),
 check("dispo").exists().notEmpty().isLength({min:1, max:90}),
+check("photo"),
+
 //check("estado").exists().notEmpty().isLength({min:1, max:90}),
 
 
