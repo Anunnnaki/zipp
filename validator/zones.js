@@ -10,10 +10,12 @@ const validatorCreateZone = [
     
 check("nameZone").exists().notEmpty().isLength({min:1, max:90}),
 check("id_User"),
-check("gps").exists().notEmpty().isLength({min:1, max:90}),
+check("gps"),
 check("valor").exists().notEmpty().isLength({min:1, max:90}),
+check("tipo").exists().notEmpty().isLength({min:1, max:90}),
 check("dispo").exists().notEmpty().isLength({min:1, max:90}),
-check("photo"),
+check("photoZone"),
+check("photoZone"),
 
 //check("estado").exists().notEmpty().isLength({min:1, max:90}),
 
@@ -38,6 +40,7 @@ return validateResults(req, res, next)
     check("tipo").exists().notEmpty().isLength({min:6, max:90}),
     check("dispo").exists().notEmpty().isLength({min:6, max:90}),
     check("estado").exists().notEmpty(),
+    check("photoZone"),
 
     (req, res, next) => {
     return validateResults(req, res, next)
